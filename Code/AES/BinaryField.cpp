@@ -49,10 +49,6 @@ class binary_field {
 
     while (get_most_significant_bit(result) >= T) {
       const auto left_over = result >> 8;
-
-      // cout << binary_field {result} << " <- result" << endl;
-      // cout << binary_field {left_over} << " <- left" << endl;
-
       const auto bit1 = left_over << 0, bit2 = left_over << 1;
       const auto bit3 = left_over << 3, bit4 = left_over << 4, bit5 = left_over << 8;
 
@@ -90,5 +86,7 @@ auto main() -> int {
   const auto a = binary_field<8> {0x57};
   const auto b = binary_field<8> {0x13};
 
-  cout << a * b << endl;
+  cout << a * b << endl;    // fe
 }
+
+

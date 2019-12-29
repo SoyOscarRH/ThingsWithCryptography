@@ -122,7 +122,6 @@ def ECM(composite_number: int, prime_upper_count: int) -> Tuple[int, int]:
 
 if __name__ == "__main__":
     ''' 
-    @author Garcia De Santiago Jorge Luis
     @author Rosas Hernandez Oscar Andres
     '''
     composite_number = int(input("A composite number n = pq: "))
@@ -131,3 +130,5 @@ if __name__ == "__main__":
     factors = ECM(composite_number, prime_upper_count)
 
     print(f"Factors are: {factors}")
+
+
