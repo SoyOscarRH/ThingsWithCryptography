@@ -1,0 +1,11 @@
+\babel@toc {spanish}{}
+\contentsline {chapter}{\numberline {1}S\IeC {\'\i }mbolo de Legendre y sus propiedades}{2}{chapter.1}% 
+\contentsline {chapter}{\numberline {2}ElGammal y el logaritmo discreto}{8}{chapter.2}% 
+\contentsline {section}{\numberline {2.1}Generadores}{8}{section.2.1}% 
+\contentsline {subsection}{\numberline {2.1.1}Otra forma}{9}{subsection.2.1.1}% 
+\contentsline {section}{\numberline {2.2}Calculo de indices}{11}{section.2.2}% 
+\contentsline {section}{\numberline {2.3}ElGammal}{14}{section.2.3}% 
+\contentsline {chapter}{\numberline {3}Criba cuadratica y RSA}{16}{chapter.3}% 
+\contentsline {section}{\numberline {3.1}Criba cuadratica}{16}{section.3.1}% 
+\contentsline {section}{\numberline {3.2}Ahora vamos con RSA}{19}{section.3.2}% 
+\contentsline {chapter}{\numberline {4}Generadores}{21}{chapter.4}% 

@@ -1,0 +1,15 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Literature review}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Operation Modes}{section.2}% 3
+\BOOKMARK [3][-]{subsubsection.2.1.1}{Electronic Code Book \(ECB\)}{subsection.2.1}% 4
+\BOOKMARK [3][-]{subsubsection.2.1.2}{Cipher Block Chaining \(CBC\)}{subsection.2.1}% 5
+\BOOKMARK [3][-]{subsubsection.2.1.3}{Cipher Feedback Mode \(CFB\)}{subsection.2.1}% 6
+\BOOKMARK [2][-]{subsection.2.2}{Initialization vector \(IV\)}{section.2}% 7
+\BOOKMARK [2][-]{subsection.2.3}{Padding}{section.2}% 8
+\BOOKMARK [1][-]{section.3}{Sotware}{}% 9
+\BOOKMARK [1][-]{section.4}{Procedure}{}% 10
+\BOOKMARK [1][-]{section.5}{Results and evidence}{}% 11
+\BOOKMARK [1][-]{section.6}{Discussion}{}% 12
+\BOOKMARK [1][-]{section.7}{Conclusions}{}% 13
+\BOOKMARK [1][-]{section.8}{Code}{}% 14
+\BOOKMARK [1][-]{section*.2}{References}{}% 15

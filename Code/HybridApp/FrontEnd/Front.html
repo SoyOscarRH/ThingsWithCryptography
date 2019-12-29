@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <title>RSA</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark" style="height: 60px;">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a style="color: white; font-size: 20px;;">RSA Algorithm: Asymmetric Encryption</a>
+            </li>
+        </ul>
+    </nav>
+
+  
+    <div class="container" style="position: absolute; top: 110px; left: 20px;">
+        
+        <br />
+        <br />
+        <br />
+
+        <h2>RSA Options</h2>
+        <p>Click on the button to display the respective content.</p>
+       
+        <br />
+
+        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#Key">Key Generator</button>
+
+        <button type="button" class="btn btn-success" data-toggle="collapse" data-target="#Encrypt">Encrypt</button>
+        
+        <button type="button" class="btn btn-danger" data-toggle="collapse" data-target="#Decrypt">Decrypt</button>
+
+        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#HASH">HASH Function</button>
+
+        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#Compare">Compare</button>
+
+    
+        <div id="Key" class="collapse">
+
+            <br />
+
+            When you click on the button "Generate Keys" you will obtain two 'txt' archives.
+            <br />
+            One Public Key and One Private Key.
+            
+            <br />
+            <br />
+            
+            <button type="button" class="btn btn-success"> Generate Keys</button>
+            
+        </div>
+
+        <div id="Encrypt" class="collapse">
+            
+            <br />
+
+            For encrypt you need to insert a key (Private or Public) and the text for encrypt.
+            <br />
+            <br />
+
+            <form>
+                <div class="input-group mb-3 input-group-sm" style="width: 400px; height: 35px;">
+                    <div class="input-group-prepend" style="height: 35px;">
+                        <span class="input-group-text" >Text</span>
+                    </div>
+                      
+                    <input type="file" name="myFile" style="height: 35px;" class="form-control">
+                </div>
+
+                <div class="input-group mb-3 input-group-sm" style="width: 400px; height: 35px;">
+                        <div class="input-group-prepend" style="height: 35px;">
+                            <span class="input-group-text" >Key</span>
+                        </div>
+                          
+                        <input type="file" name="myFile" style="height: 35px;" class="form-control">
+
+                        <div class="input-group-append">
+                                <button class="btn btn-success">Encrypt</button>
+                              </div>
+                    </div>
+            </form>
+
+        </div>
+
+        <div id="Decrypt" class="collapse">
+
+            <br />
+
+            For decrypt you need to insert a key (Private or Public) and the text for decrypt.
+            
+            <br />
+            <br />
+        
+            <form>
+                <div class="input-group mb-3 input-group-sm" style="width: 400px; height: 35px;">
+                    <div class="input-group-prepend" style="height: 35px;">
+                        <span class="input-group-text" >Text</span>
+                    </div>
+                              
+                    <input type="file" name="myFile" style="height: 35px;" class="form-control">
+                    </div>
+        
+                    <div class="input-group mb-3 input-group-sm" style="width: 400px; height: 35px;">
+                        <div class="input-group-prepend" style="height: 35px;">
+                            <span class="input-group-text" >Key</span>
+                        </div>
+                                  
+                    <input type="file" name="myFile" style="height: 35px;" class="form-control">
+        
+                        <div class="input-group-append">
+                            <button class="btn btn-success">Decrypt</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        <div id="HASH" class="collapse">
+
+            <br />
+
+            HASH Function it's used to confirm the authenticity of the message.
+            <br />
+            Put the plain text and compare with the archive Sign.txt.
+            <br />
+            If it's the same text, it's authentic.
+            
+            <br />
+            <br />
+        
+            <form>
+                <div class="input-group mb-3 input-group-sm" style="width: 400px; height: 35px;">
+                    <div class="input-group-prepend" style="height: 35px;">
+                        <span class="input-group-text" >Text</span>
+                    </div>
+                              
+                    <input type="file" name="myFile" style="height: 35px;" class="form-control">
+                    </div>
+        
+                    <div class="input-group mb-3 input-group-sm" style="width: 400px; height: 35px;">
+                        <div class="input-group-prepend" style="height: 35px;">
+                            <span class="input-group-text" >Key</span>
+                        </div>
+                                  
+                    <input type="file" name="myKey" style="height: 35px;" class="form-control">
+        
+                        <div class="input-group-append">
+                            <button class="btn btn-success">HASH</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        <div id="Compare" class="collapse">
+
+            <br />
+
+            Compare the plaintext with the decrypt hash to authetificate the sender
+    
+            
+            <br />
+            <br />
+        
+            <form>
+                <div class="input-group mb-3 input-group-sm" style="width: 400px; height: 35px;">
+                    <div class="input-group-prepend" style="height: 35px;">
+                        <span class="input-group-text" >Plaintext</span>
+                    </div>
+                              
+                    <input type="file" name="myFile" style="height: 35px;" class="form-control">
+                    </div>
+        
+                    <div class="input-group mb-3 input-group-sm" style="width: 400px; height: 35px;">
+                        <div class="input-group-prepend" style="height: 35px;">
+                            <span class="input-group-text" >HASH</span>
+                        </div>
+                                  
+                    <input type="file" name="myKey" style="height: 35px;" class="form-control">
+        
+                        <div class="input-group-append">
+                            <button class="btn btn-success">Compare</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    
+    </div>
+
+    <div class="container">
+    
+        <img src="RSA.gif"  style="position: absolute; left: 650px; top: 200px;"/>
+    
+    </div>
+
+    <div class="text-center bg-dark"  style="position: absolute; bottom:5px; width: 100%; height: 80px;">
+        <br />
+        <p style="color: white;">Created by Oscar David Ortega and Oscar Andres Rosas for Cryptography Class</p>
+             
+    </div>
+
+</body>
+</html>

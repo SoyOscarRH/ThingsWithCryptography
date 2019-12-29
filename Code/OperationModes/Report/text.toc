@@ -1,0 +1,16 @@
+\babel@toc {english}{}
+\contentsline {section}{\numberline {I}Introduction}{2}{section.1}% 
+\contentsline {section}{\numberline {II}Literature review}{2}{section.2}% 
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-A}}Operation Modes}{2}{subsection.2.1}% 
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {II-A}1}Electronic Code Book (ECB)}{2}{subsubsection.2.1.1}% 
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {II-A}2}Cipher Block Chaining (CBC)}{2}{subsubsection.2.1.2}% 
+\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {II-A}3}Cipher Feedback Mode (CFB)}{3}{subsubsection.2.1.3}% 
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-B}}Initialization vector (IV)}{3}{subsection.2.2}% 
+\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-C}}Padding}{4}{subsection.2.3}% 
+\contentsline {section}{\numberline {III}Sotware}{4}{section.3}% 
+\contentsline {section}{\numberline {IV}Procedure}{4}{section.4}% 
+\contentsline {section}{\numberline {V}Results and evidence}{4}{section.5}% 
+\contentsline {section}{\numberline {VI}Discussion}{6}{section.6}% 
+\contentsline {section}{\numberline {VII}Conclusions}{6}{section.7}% 
+\contentsline {section}{\numberline {VIII}Code}{6}{section.8}% 
+\contentsline {section}{References}{10}{section*.2}% 

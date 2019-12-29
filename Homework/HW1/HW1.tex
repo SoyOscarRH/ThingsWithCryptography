@@ -1,0 +1,776 @@
+% *****************************************************************************************************
+% ****************************                 HW1                     ********************************
+% *****************************************************************************************************
+
+% =======================================================
+% =======         HEADER FOR DOCUMENT        ============
+% =======================================================
+    
+    % *********  SPECIFIC FOR THIS BOOK  ********
+    \def\ProjectAuthorLink{https://github.com/CompilandoConocimiento}
+    \def\ProjectNameLink{\ProjectAuthorLink/RandomProject}    
+    
+
+    % *********   DOCUMENT ITSELF   **************
+    \documentclass[12pt, fleqn]{report}                             %Type of doc and size of font and left equations
+    \usepackage[margin=1.2in]{geometry}                             %Margins and Geometry pacakge
+    \usepackage{ifthen}                                             %Allow simple programming using if - then
+    \usepackage[hidelinks]{hyperref}                                %Allow to create hiperlinks and Fuck Firefox
+    \usepackage{pdfpages}                                           %Allow us 'import' PDF's
+    \hypersetup{pageanchor=false}                                   %Solve 'double page 1' warnings in build :v
+    \setlength{\parindent}{0pt}                                     %Eliminate ugly indentation
+    \author{Oscar Andrés Rosas}                                     %Who I am
+
+    % *********   LANGUAJE    *****************
+    \usepackage[spanish]{babel}                                     %Please allow me to type in spanish
+    \usepackage[utf8]{inputenc}                                     %Lets use UFT-8
+    \usepackage[T1]{fontenc}                                        %Allow for better font support
+    \usepackage{textcmds}                                           %Allow us to use quoutes
+    \usepackage{changepage}                                         %Allow us to use identate paragraphs
+    \usepackage{anyfontsize}                                        %All the sizes for fonts wiiiii!
+
+    % *********   MATH AND HIS STYLE  *********
+    \usepackage{ntheorem, amsmath, amssymb, amsfonts}               %All fucking math, I want all!
+    \usepackage{mathrsfs, mathtools, empheq}                        %All fucking math, I want all!
+    \usepackage{cancel}                                             %Negate symbol
+    \usepackage{centernot}                                          %Allow me to negate a symbol
+    \decimalpoint                                                   %Use decimal point
+
+    % *********   GRAPHICS AND IMAGES *********
+    \usepackage{graphicx}                                           %Allow to create graphics
+    \usepackage{float}                                              %For images
+    \usepackage{wrapfig}                                            %Allow to create images
+    \graphicspath{ {Graphics/} }                                    %Where are the images :D
+
+    % *********   LISTS AND TABLES ***********
+    \usepackage{listings, listingsutf8}                             %We will be using code here
+    \usepackage[inline]{enumitem}                                   %We will need to enumarate
+    \usepackage{tasks}                                              %Horizontal lists
+    \usepackage{longtable}                                          %Lets make tables awesome
+    \usepackage{booktabs}                                           %Lets make tables awesome
+    \usepackage{tabularx}                                           %Lets make tables awesome
+    \usepackage{multirow}                                           %Lets make tables awesome
+    \usepackage{multicol}                                           %Create multicolumns
+
+    % *********   REMOVE SOME ERRORS **********
+    \hbadness=10000                                                 %Ignore \vbox and \hbox warings
+    \hfuzz=\maxdimen\newdimen\hfuzz                                 %Ignore \vbox and \hbox warings
+
+    % *********   HEADERS AND FOOTERS ********
+    \usepackage{fancyhdr}                                           %Lets make awesome headers/footers
+    \pagestyle{fancy}                                               %Lets make awesome headers/footers
+    \setlength{\headheight}{16pt}                                   %Top line
+    \setlength{\parskip}{0.5em}                                     %Top line
+    \renewcommand{\footrulewidth}{0.5pt}                            %Bottom line
+
+    \lhead{                                                         %Left Header
+        \hyperlink{section.\arabic{section}}                        %Make a link to the current chapter
+        {\normalsize{\textsc{\nouppercase{\leftmark}}}}             %And fot it put the name
+    }
+
+    \rhead{                                                         %Right Header
+        \hyperlink{section.\arabic{section}.\arabic{subsection}}    %Make a link to the current chapter
+            {\footnotesize{\textsc{\nouppercase{\rightmark}}}}      %And fot it put the name
+    }
+
+    \rfoot{\textsc{\small{Oscar Andres Rosas Hernandez}}}     %This will always be a footer  
+    \lfoot{\textsc{\small{Jorge Luís García De Santiago}}}     %This will always be a footer  
+
+    
+    
+    
+% =======================================================
+% ===================   COMMANDS    =====================
+% =======================================================
+
+    % =========================================
+    % =======   NEW ENVIRONMENTS   ============
+    % =========================================
+    \newenvironment{Indentation}[1][0.75em]                         %Use: \begin{Inde...}[Num]...\end{Inde...}
+        {\begin{adjustwidth}{#1}{}}                                 %If you dont put nothing i will use 0.75 em
+        {\end{adjustwidth}}                                         %This indentate a paragraph
+    
+    \newenvironment{SmallIndentation}[1][0.75em]                    %Use: The same that we upper one, just 
+        {\begin{adjustwidth}{#1}{}\begin{footnotesize}}             %footnotesize size of letter by default
+        {\end{footnotesize}\end{adjustwidth}}                       %that's it
+    
+    \def \Eq {equation}                                             %Stupid Visual studio error
+    \newenvironment{MultiLineEquation}[1]                           %Use: To create MultiLine equations
+        {\begin{\Eq}\begin{alignedat}{#1}}                          %Use: \begin{Multi..}{Num. de Columnas}
+        {\end{alignedat}\end{\Eq}}                                  %And.. that's it!
+    
+    \newenvironment{MultiLineEquation*}[1]                          %Use: To create MultiLine equations
+        {\begin{\Eq*}\begin{alignedat}{#1}}                         %Use: \begin{Multi..}{Num. de Columnas}
+        {\end{alignedat}\end{\Eq*}}                                 %And.. that's it!
+
+    \newenvironment{largeEq} {\begingroup \large}{\endgroup}        %Make eq bigger
+    \newenvironment{LargeEq} {\begingroup \Large}{\endgroup}        %Make eq bigger
+    \newenvironment{HugeEq} {\begingroup \Huge}{\endgroup}          %Make eq bigger!
+
+    % =========================================
+    % == GENERAL TEXT & SYMBOLS ENVIRONMENTS ==
+    % =========================================
+    
+    % =====  TEXT  ======================
+    \newcommand \Quote              {\qq}                           %Use: \Quote to use quotes
+    \newcommand \Over               {\overline}                     %Use: \Bar to use just for short
+    \newcommand \ForceNewLine       {$\Space$\\}                    %Use it in theorems for example
+    \newcommand \ForceColumnBreak   {\vfill\null\columnbreak}       %Use only in multicols
+
+    % =====  SPACES  ====================
+    \DeclareMathOperator \Space     {\quad}                         %Use: \Space for a cool mega space
+    \DeclareMathOperator \MegaSpace {\quad \quad}                   %Use: \MegaSpace for a cool mega mega space
+    \DeclareMathOperator \MiniSpace {\;}                            %Use: \Space for a cool mini space
+    
+    % =====  MATH TEXT  =================
+    \newcommand \Such           {\MiniSpace | \MiniSpace}           %Use: \Such like in sets
+    \newcommand \Also           {\MiniSpace \text{y} \MiniSpace}    %Use: \Also so it's look cool
+    \newcommand \Remember[1]    {\Space\text{\scriptsize{#1}}}      %Use: \Remember so it's look cool
+    
+    % =====  THEOREMS: IN SPANISH :0  ===
+    \newtheorem{Theorem}        {Teorema}[section]                  %Use: \begin{Theorem}[Name]\label{Nombre}...
+    \newtheorem{Corollary}      {Colorario}[Theorem]                %Use: \begin{Corollary}[Name]\label{Nombre}...
+    \newtheorem{Lemma}[Theorem] {Lemma}                             %Use: \begin{Lemma}[Name]\label{Nombre}...
+    \newtheorem{Definition}     {Definición}[section]               %Use: \begin{Definition}[Name]\label{Nombre}...
+    \theoremstyle{break}                                            %THEOREMS START 1 SPACE AFTER Fuck!
+
+    % =====  LOGIC  =====================
+    \newcommand \lIff    {\leftrightarrow}                          %Use: \lIff for logic iff
+    \newcommand \lEqual  {\MiniSpace \Leftrightarrow \MiniSpace}    %Use: \lEqual for a logic double arrow
+    \newcommand \lInfire {\MiniSpace \Rightarrow \MiniSpace}        %Use: \lInfire for a logic infire
+    \newcommand \lLongTo {\longrightarrow}                          %Use: \lLongTo for a long arrow
+    \newcommand \lAnd    {\land}                                    %Use: \lAnd ^
+    \newcommand \lOr     {\lor}                                     %Use: \lOr or symbol
+    \newcommand \lNot    {\neg}                                     %Use: \lNot for negation
+
+    % =====  FAMOUS SETS  ===============
+    \DeclareMathOperator \Naturals     {\mathbb{N}}                 %Use: \Naturals por Notation
+    \DeclareMathOperator \Primes       {\mathbb{P}}                 %Use: \Primes por Notation
+    \DeclareMathOperator \Integers     {\mathbb{Z}}                 %Use: \Integers por Notation
+    \DeclareMathOperator \Racionals    {\mathbb{Q}}                 %Use: \Racionals por Notation
+    \DeclareMathOperator \Reals        {\mathbb{R}}                 %Use: \Reals por Notation
+    \DeclareMathOperator \Complexs     {\mathbb{C}}                 %Use: \Complex por Notation
+    \DeclareMathOperator \GenericField {\mathbb{F}}                 %Use: \GenericField por Notation
+    \DeclareMathOperator \VectorSet    {\mathbb{V}}                 %Use: \VectorSet por Notation
+    \DeclareMathOperator \SubVectorSet {\mathbb{W}}                 %Use: \SubVectorSet por Notation
+    \DeclareMathOperator \Polynomials  {\mathbb{P}}                 %Use: \Polynomials por Notation
+    \DeclareMathOperator \VectorSpace  {\VectorSet_{\GenericField}} %Use: \VectorSpace por Notation
+    \DeclareMathOperator \LinealTransformation {\mathcal{T}}        %Use: \LinealTransformation for a cool T
+    \DeclareMathOperator \LinTrans      {\mathcal{T}}               %Use: \LinTrans for a cool T
+    \DeclareMathOperator \Laplace       {\mathcal{L}}               %Use: \LinTrans for a cool T
+
+    % =====  CONTAINERS   ===============
+    \newcommand{\Set}[1]            {\left\{ \; #1 \; \right\}}     %Use: \Set {Info} for INTELLIGENT space 
+    \newcommand{\bigSet}[1]         {\big\{  \; #1 \; \big\}}       %Use: \bigSet  {Info} for space 
+    \newcommand{\BigSet}[1]         {\Big\{  \; #1 \; \Big\}}       %Use: \BigSet  {Info} for space 
+    \newcommand{\biggSet}[1]        {\bigg\{ \; #1 \; \bigg\}}      %Use: \biggSet {Info} for space 
+    \newcommand{\BiggSet}[1]        {\Bigg\{ \; #1 \; \Bigg\}}      %Use: \BiggSet {Info} for space 
+        
+    \newcommand{\Wrap}[1]           {\left( #1 \right)}             %Use: \Wrap {Info} for INTELLIGENT space
+    \newcommand{\bigWrap}[1]        {\big( \; #1 \; \big)}          %Use: \bigBrackets  {Info} for space 
+    \newcommand{\BigWrap}[1]        {\Big( \; #1 \; \Big)}          %Use: \BigBrackets  {Info} for space 
+    \newcommand{\biggWrap}[1]       {\bigg( \; #1 \; \bigg)}        %Use: \biggBrackets {Info} for space 
+    \newcommand{\BiggWrap}[1]       {\Bigg( \; #1 \; \Bigg)}        %Use: \BiggBrackets {Info} for space 
+
+    \newcommand{\Brackets}[1]       {\left[ #1 \right]}             %Use: \Brackets {Info} for INTELLIGENT space
+    \newcommand{\bigBrackets}[1]    {\big[ \; #1 \; \big]}          %Use: \bigBrackets  {Info} for space 
+    \newcommand{\BigBrackets}[1]    {\Big[ \; #1 \; \Big]}          %Use: \BigBrackets  {Info} for space 
+    \newcommand{\biggBrackets}[1]   {\bigg[ \; #1 \; \bigg]}        %Use: \biggBrackets {Info} for space 
+    \newcommand{\BiggBrackets}[1]   {\Bigg[ \; #1 \; \Bigg]}        %Use: \BiggBrackets {Info} for space 
+
+    \newcommand{\Generate}[1]   {\left\langle #1 \right\rangle}     %Use: \Generate {Info} <>
+    \newcommand{\Floor}[1]      {\left \lfloor #1 \right \rfloor}   %Use: \Floor {Info} for floor 
+    \newcommand{\Ceil}[1]       {\left \lceil #1 \right \rceil }    %Use: \Ceil {Info} for ceil
+    
+    % =====  BETTERS MATH COMMANDS   =====
+    \newcommand{\pfrac}[2]      {\Wrap{\dfrac{#1}{#2}}}             %Use: Put fractions in parentesis
+    \newcommand{\Sum}           {\displaystyle \sum}                %Use: Sum to big sum
+    \newcommand{\Int}           {\displaystyle \int}                %Use: Sum to big integral
+
+
+    % =========================================
+    % ====   LINEAL ALGEBRA & VECTORS    ======
+    % =========================================
+
+    % ===== UNIT VECTORS  ================
+    \newcommand{\hati}      {\hat{\imath}}                           %Use: \hati for unit vector    
+    \newcommand{\hatj}      {\hat{\jmath}}                           %Use: \hatj for unit vector    
+    \newcommand{\hatk}      {\hat{k}}                                %Use: \hatk for unit vector
+
+    % ===== MAGNITUDE  ===================
+    \newcommand{\abs}[1]    {\left\lvert #1 \right\lvert}           %Use: \abs{expression} for |x|
+    \newcommand{\Abs}[1]    {\left\lVert #1 \right\lVert}           %Use: \Abs{expression} for ||x||
+    \newcommand{\Mag}[1]    {\left| #1 \right|}                     %Use: \Mag {Info} 
+    
+    \newcommand{\bVec}[1]   {\mathbf{#1}}                           %Use for bold type of vector
+    \newcommand{\lVec}[1]   {\overrightarrow{#1}}                   %Use for a long arrow over a vector
+    \newcommand{\uVec}[1]   {\mathbf{\hat{#1}}}                     %Use: Unitary Vector Example: $\uVec{i}
+
+    % ===== FN LINEAL TRANSFORMATION  ====
+    \newcommand{\FnLinTrans}[1]{\mathcal{T}\Wrap{#1}}               %Use: \FnLinTrans for a cool T
+    \newcommand{\VecLinTrans}[1]{\mathcal{T}\pVector{#1}}           %Use: \LinTrans for a cool T
+    \newcommand{\FnLinealTransformation}[1]{\mathcal{T}\Wrap{#1}}   %Use: \FnLinealTransformation
+
+    % ===== ALL FOR DOT PRODUCT  =========
+    \makeatletter                                                   %WTF! IS THIS
+    \newcommand*\dotP{\mathpalette\dotP@{.5}}                       %Use: \dotP for dot product
+    \newcommand*\dotP@[2] {\mathbin {                               %WTF! IS THIS            
+        \vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}           %WTF! IS THIS
+    }                                                               %WTF! IS THIS
+    \makeatother                                                    %WTF! IS THIS
+
+    % === WRAPPERS FOR COLUMN VECTOR ===
+    \newcommand{\pVector}[1]                                        %Use: \pVector {Matrix Notation} use parentesis
+        { \ensuremath{\begin{pmatrix}#1\end{pmatrix}} }             %Example: \pVector{a\\b\\c} or \pVector{a&b&c} 
+    \newcommand{\lVector}[1]                                        %Use: \lVector {Matrix Notation} use a abs 
+        { \ensuremath{\begin{vmatrix}#1\end{vmatrix}} }             %Example: \lVector{a\\b\\c} or \lVector{a&b&c} 
+    \newcommand{\bVector}[1]                                        %Use: \bVector {Matrix Notation} use a brackets 
+        { \ensuremath{\begin{bmatrix}#1\end{bmatrix}} }             %Example: \bVector{a\\b\\c} or \bVector{a&b&c} 
+    \newcommand{\Vector}[1]                                         %Use: \Vector {Matrix Notation} no parentesis
+        { \ensuremath{\begin{matrix}#1\end{matrix}} }               %Example: \Vector{a\\b\\c} or \Vector{a&b&c}
+
+    % === MAKE MATRIX BETTER  =========
+    \makeatletter                                                   %Example: \begin{matrix}[cc|c]
+    \renewcommand*\env@matrix[1][*\c@MaxMatrixCols c] {             %WTF! IS THIS
+        \hskip -\arraycolsep                                        %WTF! IS THIS
+        \let\@ifnextchar\new@ifnextchar                             %WTF! IS THIS
+        \array{#1}                                                  %WTF! IS THIS
+    }                                                               %WTF! IS THIS
+    \makeatother                                                    %WTF! IS THIS
+    
+    \newcommand{\adotP}[2] {\left< #1, #2 \right> }                 %Use for <x, y>
+    \newcommand{\wdotP}[2] {\Wrap{ #1, #2 } }                       %Use for (x, y)
+    \newcommand{\cdotP}[2] {\Wrap{ #1 \dotP #2 } }                  %Use for (x * y)
+
+
+    % =========================================
+    % =======   FAMOUS FUNCTIONS   ============
+    % =========================================
+
+    % == TRIGONOMETRIC FUNCTIONS  ====
+    \newcommand{\Cos}[1] {\cos\Wrap{#1}}                            %Simple wrappers
+    \newcommand{\Sin}[1] {\sin\Wrap{#1}}                            %Simple wrappers
+    \newcommand{\Tan}[1] {tan\Wrap{#1}}                             %Simple wrappers
+    
+    \newcommand{\Sec}[1] {sec\Wrap{#1}}                             %Simple wrappers
+    \newcommand{\Csc}[1] {csc\Wrap{#1}}                             %Simple wrappers
+    \newcommand{\Cot}[1] {cot\Wrap{#1}}                             %Simple wrappers
+
+    % === COMPLEX ANALYSIS TRIG ======
+    \newcommand \Cis[1]  {\Cos{#1} + i \Sin{#1}}                    %Use: \Cis for cos(x) + i sin(x)
+    \newcommand \pCis[1] {\Wrap{\Cis{#1}}}                          %Use: \pCis for the same with parantesis
+    \newcommand \bCis[1] {\Brackets{\Cis{#1}}}                      %Use: \bCis for the same with Brackets
+
+
+    % =========================================
+    % ===========     CALCULUS     ============
+    % =========================================
+
+    % ====== TRANSFORMS =============
+    \newcommand{\FourierT}[1]   {\mathscr{F} \left\{ #1 \right\} }  %Use: \FourierT {Funtion}
+    \newcommand{\InvFourierT}[1]{\mathscr{F}^{-1}\left\{#1\right\}} %Use: \InvFourierT {Funtion}
+
+    % ====== DERIVATIVES ============
+    \newcommand \MiniDerivate[1][x]   {\dfrac{d}{d #1}}             %Use: \MiniDerivate[var] for simple use [var]
+    \newcommand \Derivate[2]          {\dfrac{d \; #1}{d #2}}       %Use: \Derivate [f(x)][x]
+    \newcommand \MiniUpperDerivate[2] {\dfrac{d^{#2}}{d#1^{#2}}}    %Mini Derivate High Orden Derivate -- [x][pow]
+    \newcommand \UpperDerivate[3] {\dfrac{d^{#3} \; #1}{d#2^{#3}}}  %Complete High Orden Derivate -- [f(x)][x][pow]
+    
+    \newcommand \MiniPartial[1][x] {\dfrac{\partial}{\partial #1}}  %Use: \MiniDerivate for simple use [var]
+    \newcommand \Partial[2] {\dfrac{\partial \; #1}{\partial #2}}   %Complete Partial Derivate -- [f(x)][x]
+    \newcommand \MiniUpperPartial[2]                                %Mini Derivate High Orden Derivate -- [x][pow] 
+        {\dfrac{\partial^{#2}}{\partial #1^{#2}}}                   %Mini Derivate High Orden Derivate
+    \newcommand \UpperPartial[3]                                    %Complete High Orden Derivate -- [f(x)][x][pow]
+        {\dfrac{\partial^{#3} \; #1}{\partial#2^{#3}}}              %Use: \UpperDerivate for simple use
+
+    \DeclareMathOperator \Evaluate  {\Big|}                         %Use: \Evaluate por Notation
+
+    % ====== INTEGRALS ============
+    \newcommand{\inftyInt} {\int_{-\infty}^{\infty}}                %Use: \inftyInt for simple integrants
+    
+        
+% =======================================================
+% ===========      COLOR: MATERIAL DESIGN     ===========
+% =======================================================
+
+    % =====  COLORS ==================
+    \definecolor{RedMD}{HTML}{F44336}                               %Use: Color :D        
+    \definecolor{Red100MD}{HTML}{FFCDD2}                            %Use: Color :D        
+    \definecolor{Red200MD}{HTML}{EF9A9A}                            %Use: Color :D        
+    \definecolor{Red300MD}{HTML}{E57373}                            %Use: Color :D        
+    \definecolor{Red700MD}{HTML}{D32F2F}                            %Use: Color :D 
+
+    \definecolor{PurpleMD}{HTML}{9C27B0}                            %Use: Color :D        
+    \definecolor{Purple100MD}{HTML}{E1BEE7}                         %Use: Color :D        
+    \definecolor{Purple200MD}{HTML}{EF9A9A}                         %Use: Color :D        
+    \definecolor{Purple300MD}{HTML}{BA68C8}                         %Use: Color :D        
+    \definecolor{Purple700MD}{HTML}{7B1FA2}                         %Use: Color :D 
+
+    \definecolor{IndigoMD}{HTML}{3F51B5}                            %Use: Color :D        
+    \definecolor{Indigo100MD}{HTML}{C5CAE9}                         %Use: Color :D        
+    \definecolor{Indigo200MD}{HTML}{9FA8DA}                         %Use: Color :D        
+    \definecolor{Indigo300MD}{HTML}{7986CB}                         %Use: Color :D        
+    \definecolor{Indigo700MD}{HTML}{303F9F}                         %Use: Color :D 
+
+    \definecolor{BlueMD}{HTML}{2196F3}                              %Use: Color :D        
+    \definecolor{Blue100MD}{HTML}{BBDEFB}                           %Use: Color :D        
+    \definecolor{Blue200MD}{HTML}{90CAF9}                           %Use: Color :D        
+    \definecolor{Blue300MD}{HTML}{64B5F6}                           %Use: Color :D        
+    \definecolor{Blue700MD}{HTML}{1976D2}                           %Use: Color :D        
+    \definecolor{Blue900MD}{HTML}{0D47A1}                           %Use: Color :D  
+
+    \definecolor{CyanMD}{HTML}{00BCD4}                              %Use: Color :D        
+    \definecolor{Cyan100MD}{HTML}{B2EBF2}                           %Use: Color :D        
+    \definecolor{Cyan200MD}{HTML}{80DEEA}                           %Use: Color :D        
+    \definecolor{Cyan300MD}{HTML}{4DD0E1}                           %Use: Color :D        
+    \definecolor{Cyan700MD}{HTML}{0097A7}                           %Use: Color :D        
+    \definecolor{Cyan900MD}{HTML}{006064}                           %Use: Color :D 
+
+    \definecolor{TealMD}{HTML}{009688}                              %Use: Color :D        
+    \definecolor{Teal100MD}{HTML}{B2DFDB}                           %Use: Color :D        
+    \definecolor{Teal200MD}{HTML}{80CBC4}                           %Use: Color :D        
+    \definecolor{Teal300MD}{HTML}{4DB6AC}                           %Use: Color :D        
+    \definecolor{Teal700MD}{HTML}{00796B}                           %Use: Color :D        
+    \definecolor{Teal900MD}{HTML}{004D40}                           %Use: Color :D 
+
+    \definecolor{GreenMD}{HTML}{4CAF50}                             %Use: Color :D        
+    \definecolor{Green100MD}{HTML}{C8E6C9}                          %Use: Color :D        
+    \definecolor{Green200MD}{HTML}{A5D6A7}                          %Use: Color :D        
+    \definecolor{Green300MD}{HTML}{81C784}                          %Use: Color :D        
+    \definecolor{Green700MD}{HTML}{388E3C}                          %Use: Color :D        
+    \definecolor{Green900MD}{HTML}{1B5E20}                          %Use: Color :D
+
+    \definecolor{AmberMD}{HTML}{FFC107}                             %Use: Color :D        
+    \definecolor{Amber100MD}{HTML}{FFECB3}                          %Use: Color :D        
+    \definecolor{Amber200MD}{HTML}{FFE082}                          %Use: Color :D        
+    \definecolor{Amber300MD}{HTML}{FFD54F}                          %Use: Color :D        
+    \definecolor{Amber700MD}{HTML}{FFA000}                          %Use: Color :D        
+    \definecolor{Amber900MD}{HTML}{FF6F00}                          %Use: Color :D
+
+    \definecolor{OrangeMD}{HTML}{ff9800}                            %Use: Color :D        
+    \definecolor{Orange100MD}{HTML}{ffe0b2}                         %Use: Color :D        
+    \definecolor{Orange200MD}{HTML}{ffcc80}                         %Use: Color :D        
+    \definecolor{Orange300MD}{HTML}{ffb74d}                         %Use: Color :D        
+    \definecolor{Orange700MD}{HTML}{fb8c00}                         %Use: Color :D        
+    \definecolor{Orange900MD}{HTML}{ef6c00}                         %Use: Color :D
+
+    \definecolor{BlueGreyMD}{HTML}{607D8B}                          %Use: Color :D        
+    \definecolor{BlueGrey100MD}{HTML}{CFD8DC}                       %Use: Color :D        
+    \definecolor{BlueGrey200MD}{HTML}{B0BEC5}                       %Use: Color :D        
+    \definecolor{BlueGrey300MD}{HTML}{90A4AE}                       %Use: Color :D        
+    \definecolor{BlueGrey700MD}{HTML}{455A64}                       %Use: Color :D        
+    \definecolor{BlueGrey900MD}{HTML}{263238}                       %Use: Color :D        
+
+    \definecolor{DeepPurpleMD}{HTML}{673AB7}                        %Use: Color :D
+
+    \definecolor{SolarizedBase}{HTML}{fdf6e3}                       %Use: Color :D
+    \definecolor{SolarizedFont}{HTML}{073642}                       %Use: Color :D
+
+    % =====  ENVIRONMENT ==============
+    \newcommand{\Color}[2]{\textcolor{#1}{#2}}                      %Simple color environment
+    \newenvironment{ColorText}[1]                                   %Use: \begin{ColorText}
+        { \leavevmode\color{#1}\ignorespaces }                      %That's is!
+
+
+% =======================================================
+% ===========           CODE EDITING          ===========
+% =======================================================
+
+    \newcommand{\fontCode}        { \ttfamily\bfseries }            %Use: \fontCode for font
+    \newcommand{\fontCodeTiny}    { \fontCode\tiny }                %Sizes
+    \newcommand{\fontCodeFoot}    { \fontCode\footnotesize }        %Sizes
+    \newcommand{\fontCodeScript}  { \fontCode\scriptsize }          %Sizes
+    \newcommand{\fontCodeCostume} { \fontCode\fontsize{10}{7} }     %Sizes
+   
+
+    % =====  CODE EDITOR =============
+    \lstdefinestyle{CompilandoStyle} {                              %This is Code Style
+        backgroundcolor     = \color{BlueGrey900MD},                %Background Color  
+        basicstyle          = \fontCodeTiny\color{white},           %Style of text
+        commentstyle        = \color{BlueGrey200MD},                %Comment style
+        stringstyle         = \color{Green300MD},                   %String style
+        keywordstyle        = \color{Blue300MD},                    %keywords style
+        numberstyle         = \tiny\color{TealMD},                  %Size of a number
+        frame               = none,                                 %Adds a frame around the code
+        breakatwhitespace   = true,                                 %Style   
+        breaklines          = true,                                 %Style   
+        showstringspaces    = false,                                %Hate those spaces                  
+        breaklines          = true,                                 %Style                   
+        keepspaces          = true,                                 %Style                   
+        numbers             = left,                                 %Style                   
+        numbersep           = 10pt,                                 %Style 
+        xleftmargin         = \parindent,                           %Style 
+        tabsize             = 4,                                    %Style
+        inputencoding       = utf8/latin1                           %Allow me to use special chars
+    }
+
+    % =====  CODE EDITOR =============
+    \lstdefinestyle{CompilandoStylePurity} {                        %This is Code Style
+        backgroundcolor     = \color{white},                        %Background Color  
+        basicstyle          = \fontCodeTiny\color{BlueGrey900MD},   %Style of text
+        commentstyle        = \color{Green300MD},                   %Comment style
+        stringstyle         = \color{Teal700MD},                    %String style
+        keywordstyle        = \color{Blue700MD},                    %keywords style
+        numberstyle         = \tiny\color{TealMD},                  %Size of a number
+        frame               = none,                                 %Adds a frame around the code
+        breakatwhitespace   = true,                                 %Style   
+        breaklines          = true,                                 %Style   
+        showstringspaces    = false,                                %Hate those spaces                  
+        breaklines          = true,                                 %Style                   
+        keepspaces          = true,                                 %Style                   
+        numbers             = left,                                 %Style                   
+        numbersep           = 11pt,                                 %Style 
+        xleftmargin         = \parindent,                           %Style 
+        tabsize             = 4,                                    %Style
+        inputencoding       = utf8/latin1                           %Allow me to use special chars
+    }
+
+    % =====  CODE EDITOR =============
+    \lstdefinestyle{CompilandoStyleSolarized} {                     %This is Code Style
+        backgroundcolor     = \color{SolarizedBase},                %Background Color  
+        basicstyle          = \fontCodeFoot\color{SolarizedFont},   %Style of text
+        commentstyle        = \color{Green300MD},                   %Comment style
+        stringstyle         = \color{Teal700MD},                    %String style
+        keywordstyle        = \color{Blue700MD},                    %keywords style
+        numberstyle         = \tiny\color{TealMD},                  %Size of a number
+        frame               = none,                                 %Adds a frame around the code
+        breakatwhitespace   = true,                                 %Style   
+        breaklines          = true,                                 %Style   
+        showstringspaces    = false,                                %Hate those spaces                  
+        breaklines          = true,                                 %Style                   
+        keepspaces          = true,                                 %Style                   
+        numbers             = none,                                 %Style                   
+        tabsize             = 4,                                    %Style
+        inputencoding       = utf8/latin1                           %Allow me to use special chars
+    }
+ 
+    \lstset{style = CompilandoStyleSolarized}                          %Use this style
+
+% =====================================================
+% ============        COVER PAGE       ================
+% =====================================================
+\begin{document}
+
+
+\begin{titlepage}
+
+    % ============ TITLE PAGE STYLE  ================
+    \definecolor{TitlePageColor}{cmyk}{1,.60,0,.40}                 %Simple colors
+    \definecolor{ColorSubtext}{cmyk}{1,.50,0,.10}                   %Simple colors
+    \newgeometry{left=0.25\textwidth}                               %Defines an Offset
+    \pagecolor{TitlePageColor}                                      %Make it this Color to page
+    \color{white}                                                   %General things should be white
+
+    % ===== MAKE SOME SPACE =========
+    \vspace                                                         %Give some space
+    \baselineskip                                                   %But we need this to up command
+
+    % ============ NAME OF THE PROJECT  ============
+    \makebox[0pt][l]{\rule{1.3\textwidth}{3pt}}                     %Make a cool line
+
+    \textbf{\textsc{\Large Facultad de Ciencias de la Universidad \\ Nacional Autónoma de México}}                          %Name of project 
+    \vspace{2.7cm}                                                  %Name of project   
+
+    % ============ NAME OF THE BOOK  ===============
+    \href{ProjectNameLink/Book}                                     %Link to Author
+    {\fontsize{55}{68}\selectfont \textbf{Tarea 1 de  \\[0.4cm] Criptografía y \\[0.4cm] Seguridad}}\\[0.5cm]     %Name of the book
+    \textcolor{ColorSubtext}{\textsc{\Huge Parcial 1}}          %Name of the general theme
+
+    \vfill                                                          %Fill the space
+
+    % ============ NAME OF THE AUTHOR  =============
+    \href{https://soyoscarrh.github.io/}                                        %Link to Author
+    {\LARGE \textsf{Oscar Andrés Rosas Hernandez}} \\[0.5cm]                  %Author
+    {\LARGE \textsf{Jorge Luís García De Santiago}}                  %Author
+
+    % ===== MAKE SOME SPACE =========
+    \vspace                                                         %Give some space
+    \baselineskip                                                   %But we need this to up command
+
+    {\large \textsf{19 Septiembre 2019}}                                  %Date
+
+\end{titlepage}
+
+\restoregeometry                                                    %Restores the geometry
+\nopagecolor
+
+\large
+\chapter{Teoría de números}
+
+\begin{itemize}
+    \item Supón el siguiente sistema:
+
+          \begin{MultiLineEquation*}{3}
+              x \equiv 2 \pmod{22}     \\
+              x \equiv 4 \pmod{26}     \\
+              x \equiv 6 \pmod{34}     \\
+              x \equiv 8 \pmod{46}
+          \end{MultiLineEquation*}
+
+          Lamentablemente no son coprimos a pares, por lo que no podemos aplicar el TCR (teorema chino del
+          residuo), bueno, no directamente,
+          lo que haremos sera descomponer el modulo de cada uno hasta llegar a un conjunto de ecuaciones que
+          sean coprimas a pares.
+
+          Esto sale rápido porque los modulos son 2 veces un primo:
+          \begin{MultiLineEquation*}{3}
+              x \equiv 2 \pmod{22} \text{ pasará a ser }\MiniSpace  x \equiv 0 \pmod{2} \text{ y } x \equiv 2 \pmod{11} \\
+              x \equiv 4 \pmod{26} \text{ pasará a ser }\MiniSpace  x \equiv 0 \pmod{2} \text{ y } x \equiv 4 \pmod{13} \\
+              x \equiv 6 \pmod{34} \text{ pasará a ser }\MiniSpace  x \equiv 0 \pmod{2} \text{ y } x \equiv 6 \pmod{17} \\
+              x \equiv 8 \pmod{46} \text{ pasará a ser }\MiniSpace  x \equiv 0 \pmod{2} \text{ y } x \equiv 8 \pmod{23} \\
+          \end{MultiLineEquation*}
+
+          Y quitando las repetidamos podemos llegar a un sistema donde los modulos si son coprimos a pares:
+
+          \begin{MultiLineEquation*}{3}
+              x &\equiv 0 \pmod{2}      \\
+              x &\equiv 4 \pmod{11}     \\
+              x &\equiv 4 \pmod{13}     \\
+              x &\equiv 6 \pmod{17}     \\
+              x &\equiv 8 \pmod{23}
+          \end{MultiLineEquation*}
+
+          Y ahora si:
+
+          Entonces $N = (2)(11)(13)(17)(23)$ y
+          $N_1 = (11)(13)(17)(23)$,
+          $N_2 = (2)(13)(17)(23)$,
+          $N_3 = (2)(11)(17)(23)$,
+          $N_4 = (2)(11)(13)(23)$,
+          $N_5 = (2)(11)(13)(17)$,
+          por lo tanto ahora vamos a resolver las congruencias del estilo
+          $c_i \; N_i \equiv a_i \pmod{n_i}$.
+
+          \begin{itemize}
+              \item Encontremos a $c_1$
+                    \begin{MultiLineEquation*}{3}
+                        c_1 (11)(13)(17)(23)        &\equiv 1 &&\pmod{2}    \\
+                        c_1 (55,913)                &\equiv 1 &&\pmod{2}    \\
+                        c_1 (1)                     &\equiv 1 &&\pmod{2}    \\
+                        c_1                         &\equiv 1 &&\pmod{2}
+                    \end{MultiLineEquation*}
+
+              \item Encontremos a $c_2$
+                    \begin{MultiLineEquation*}{3}
+                        c_2 (2)(13)(17)(23)         &\equiv 1 &&\pmod{11}    \\
+                        c_2 (10,166)                &\equiv 1 &&\pmod{11}    \\
+                        c_2 (2)                     &\equiv 1 &&\pmod{11}    \\
+                        c_2                         &\equiv 1 (6) &&\pmod{11} \\
+                        c_2                         &\equiv 6 &&\pmod{11}    \\
+                    \end{MultiLineEquation*}
+
+              \item Encontremos a $c_3$
+                    \begin{MultiLineEquation*}{3}
+                        c_3 (2)(11)(17)(23)         &\equiv 1 &&\pmod{13}    \\
+                        c_3 (8,602)                 &\equiv 1 &&\pmod{13}    \\
+                        c_3 (9)                     &\equiv 1 &&\pmod{13}    \\
+                        c_3                         &\equiv 1 (3) &&\pmod{13} \\
+                        c_3                         &\equiv 3 &&\pmod{13}      \\
+                    \end{MultiLineEquation*}
+
+
+              \item Encontremos a $c_4$
+                    \begin{MultiLineEquation*}{3}
+                        c_4 (2)(11)(13)(23)         &\equiv 1 &&\pmod{17}    \\
+                        c_4 (6,578)                 &\equiv 1 &&\pmod{17}    \\
+                        c_4 (16)                    &\equiv 1 &&\pmod{17}    \\
+                        c_4                         &\equiv 1(16) &&\pmod{17} \\
+                        c_4                         &\equiv 16 &&\pmod{17}     \\
+                    \end{MultiLineEquation*}
+
+              \item Encontremos a $c_5$
+                    \begin{MultiLineEquation*}{3}
+                        c_5 (2)(11)(13)(17)         &\equiv 1 &&\pmod{23}    \\
+                        c_5 (4,862)                 &\equiv 1 &&\pmod{23}    \\
+                        c_5 (9)                     &\equiv 1 &&\pmod{23}    \\
+                        c_5                         &\equiv 1(18) &&\pmod{23} \\
+                        c_5                         &\equiv 18 &&\pmod{23}     \\
+                    \end{MultiLineEquation*}
+          \end{itemize}
+
+          Por lo tanto una solución $x_0$ es:
+          \begin{MultiLineEquation*}{3}
+              x_0
+              &= &&\sum_{i=0}^r a_iN_ic_i                       \\
+              &= && a_1N_1c_1 + a_2N_2c_2 + a_3N_3c_3 + a_4N_4c_4 + a_5N_5c_5           \\
+              &= && \\
+              & && 2((11)(13)(17)(23))1 + \\
+              & && 2((2)(13)(17)(23))6 + \\
+              & && 4((2)(11)(17)(23))3 + \\
+              & && 6((2)(11)(13)(23))16 + \\
+              & && 8((2)(11)(13)(17))18
+              \\
+              &= && 1668658 \pmod {(2)(11)(13)(17)(23)}              \\
+              &= && 1668658 \pmod {111,826}                          \\
+              &= && 103094 \pmod {111,826}
+          \end{MultiLineEquation*}
+
+          Ahora, todas las soluciones van a ser módulo $(2)(11)(13)(17)(23)$ es decir
+          $103094 \pmod{111,826}$.
+
+          Por lo tanto tenemos soluciones que son congruentes módulo 111,826,
+          es decir $103094, 1780484, \dots 111,826k + 103094$
+
+    \item {\Large Demostremos que las leyes de los signos en $\Integers_n$ funcionan}.
+    
+        La idea es ver que se cumple que la clase de $a$ por la clase del inverso de $b$ 
+        es igual a la clase de $-ab$.
+
+        Otra opción sería saber que $\Integers_n$ es un grupo, por lo que podemos hacer lo siguiente:
+        Sea $a, b \in \Integers_n$ entonces:
+        \begin{itemize}
+            \item $(a)(-b) = -(ab) \in \Integers_n$
+            
+                Por definicion $-(ab)$ es una solucion a la ecuacion $ab + x = 0$
+                ahora veamos que pasa si decimos que  $x = a(-b)$, entonces
+                sustituyendo tenemos que $ab + a(-b) = a[b + (-b)] = a(0) = 0$.
+                Entonces $a(-b) = -(ab)$.
+                
+
+            \item $(-a)(b) = -(ab) \in \Integers_n$
+            
+                Por definicion $-(ab)$ es una solucion a la ecuacion $ab + x = 0$
+                ahora veamos que pasa si decimos que  $x = (-a)b$, entonces
+                sustituyendo tenemos que $ab + (-a)b = [a + (-a)]b = (0)b = 0$.
+                Entonces $(-a)b = -(ab)$.
+
+
+            \item $(-a)(-b) = (ab) \in \Integers_n$
+            
+                Vamos a usar las anteriores tenemos que $(-a)(-b)$
+                y podemos decir que $x = -b$, y reescribir como $(-a)x$ y usando los
+                anteriores podemos decir que $-(ax)$ es decir $-[a(-b)]$
+                ahora tambien usando las anteriores tenemos que $a(-b) = -(ab)$,
+                es decir $-[a(-b)] = -[-(ab)]$ ademas sabemos que el inverso de un numero $y$ del inverso 
+                es el mismo numero $y$, por lo tanto $-[-(ab)] = ab$.
+            
+        \end{itemize}
+
+
+    \item {\Large Encontrar una raíz primitiva de $\Integers_7$}.
+
+          Recordemos que dado un número natural $n$, decimos que $a$ es una raíz primitiva módulo $n$, si $a$ genera
+          como grupo a $\mathbb \Integers_n^*$, es decir, si $\forall b \in \Integers_n^*$ existe
+          $k \in \Integers_n$ tal que $a^{k} \equiv b (mod\ n)$.
+
+          Por pura fuerza bruta podemos llegar a una solución:
+          \begin{MultiLineEquation*}{3}
+              3^1 \Space &= 3    \Space &= 3 \pmod{7} \\
+              3^2 \Space &= 9    \Space &= 2 \pmod{7} \\
+              3^3 \Space &= 27   \Space &= 6 \pmod{7} \\
+              3^4 \Space &= 81   \Space &= 4 \pmod{7} \\
+              3^5 \Space &= 243  \Space &= 5 \pmod{7} \\
+              3^6 \Space &= 729  \Space &= 1 \pmod{7} \\
+          \end{MultiLineEquation*}
+
+          Por lo que $3^{algo}$ genera a todos los elementos de $\Integers_7^*$ (todo $\Integers_7$ sin contar al cero).
+
+\end{itemize}
+
+
+\chapter{Cesar - Shift cipher}
+
+Podemos hacer dos cosas, por un lado usar los progamas que hicimos en laboratio y usar fuerza bruta
+para ir probando cada una de las 26 llaves posibles (decimos que son 26 porque no aparece la ñ en el
+texto) o podemos hacer un poco de analisis, por ejemplo viendo que la J se repite mucho como
+una letra sola, por lo que podemos suponer que $e_k(y) = J$ es decir que $k = 11$.
+
+Con esto logramos ver este mensaje tan bonito: \\
+
+\begin{SmallIndentation}
+    HOLA MUCHACHOS ESPERAMOS QUE EN ESTA SU PRIMER TAREA LA DISFR-
+    UTEN Y NO LA SUFRAN (RECUERDEN QUE ESTAN AQUI PORQUE ASI LO DEC-
+    IDIERON). LA DEDICACION Y EL TRABAJO QUE HASTA ESTE MOMENTO
+
+    HAN REFLEJADO EN LAS CLASES, NOS HACE PENSAR QUE LLEGARAN
+    MUY LEJOS, POR FAVOR NO SE DETENGAN.
+
+    TRABAJAN EN EQUIPOS PARA HACER MEJOR Y MAS RAPIDO LAS COSAS,
+    ASI QUE NO SEAN UNA CARGA PARA SUS EQUIPOS DEJANDO QUE LOS
+    DEMAS HAGAN TODO NI TAMPOCO SEAN LOS PROTAGONISTAS, ESCUCHEN
+    EL PUNTO DE VISTA DE SU COMPANERO Y LUEGO DETERMINEN QUE ES LO
+    QUE MAS LE CONVIENE AL EQUIPO YA SABEN A LO QUE NOS REFERIMOS,
+    QUE SU MOTIVACION SEA LO MEJOR PARA EL EQUIPO.
+
+    ESTA TAREA ES PURA Y MERA FORMALIDAD NO LA PLANEAMOS PARA QUE
+    SEA EL RETO DEL SIGLO O ALGO ASI, NOS INTERESA QUE HAGAN LO
+    BASICO PERO QUE LO HAGAN BIEN. POR CIENRO ULTIMAMENTE ES ESTA
+    CLASE SE ESTA CARACTERIZANDO PORQUE SUS COMPANEROS ANTERIORES
+    HAN PUESTO EMPENO EN APRENDER MAS DE LO QUE PIDE EL TEMARIO Y
+    ESO NOS LLAMA LA ATENCION PERO A LA VEZ ES DE ESPERARSE YA
+    QUE ESTAMOS EN LA UNIVERSIDAD AUTONOMA DE MEXICO Y REALMENTE
+    LLEGAN MUY BUENOS ALUMNOS.
+    LOS ALENTAMOS A QUE INVESTIGUEN EN INTERNET COSAS NUEVAS QUE
+    LES ABRA MAS EL PANORAMA QUE SEAN AMBICIOSOS Y NO SE QUEDEN
+    SOLO CON LO LA CLASE PARA ESO SI DEBEN USAR TODOS SUS RECURSOS,
+    POR FAVOR NO LO HAGAN SOLO PARA CUMPLIR CON LA TAREA Y HACER
+
+    ASI SU MENOR ESFUERZO NO LO NECESITAN PARA LO QUE SI LO NECES-
+    ITAN ES PARA BUSCAR INNOVACIONES AL RESPECTO Y LLEVARLAS A
+
+    LA REALIDAD ES UNA OBLIGACIO NS ES DE SU INTERES LA CRIPTOGRAFIA
+    Y QUE NADIE LES DIGA QUE TODO ESTA ESCRITO O QUE NO PUEDEN, A
+    USTEDES LES TOCA LOS CAMBIOS DE TECNOLOGIA DONDE TENDRAN
+    QUE HACER USO DE TODOS SUS CONOCIMIENTOS PARA REALIZAR LOS
+    NUEVOS DESAFIOS.
+
+    NUESTRA META ES SOLO ENCAMINARLOS AL INICIO DE LA CRIPTOGRAFIA.
+    ASI QUE EN VEZ DE TOMAR DOS ARRANQUES DE DESESPERACION, POR
+    FAVOR TOMENSE DOS TASAS DE SU BEBIDA PREFERIDA Y TRABAJEN
+
+    CON TIEMPO. SIN MAS POR EL MOMENTO NOS DESPEDIMOS Y LES RECO-
+    RDAMOS DISFRUTEN EL CURSO.
+
+\end{SmallIndentation}
+
+
+
+\chapter{Vigenére}
+
+Lo primero que hay que hacer es buscar patrones repetidos, una vez teniendo eso podremos analizar
+la secuencia, posición, distancia y factores. Para esto haremos un programa que nos ayude con dicha
+tarea. Ahora bien, se hizo un script en Python para encontrar patrones repetidos y así facilitarnos la
+tarea, como se nos dio la pequeña pista de que la clave era al menos de longitud cinco decidimos buscar
+coincidencias de esa longitud y sus múltiplos. Teniendo en cuenta eso, se mostrará el programa para
+encontrar las apariciones:
+
+
+\begin{lstlisting}[language=python, gobble=12]
+            s = 'FUDPBVEQAHKEYECSUQWSKMBPFVIPDQNAETSPLMUOEUXIOFDQRWGNOXOUHQCCVAPDEWEQCZQSXXPTOESSEAXRINOBPFVEZSSSUQTZEOZYIPTASSNOECIOEDDGTEMASUEEJBEAYECAJMBOUDQBIGSFGOPQGTZQEEECTLAFIGSAACGXTXPGNEJGRRAEWGDMSSUYVPACSPTAWEEIFCNCJSNOETGAACJSPOQHHCNETBEIXACRODFIGHMNEWEODBUTDJWTEXROOPASSNOECIOEDDGTEMASUYQHCKMBAWEAYPBGJMGSNCACQGPFDRGSGRSUIACSUDQROWCTNJGAYDGGNFDBEEEFIGCABSPTMCZQSMJHQRQHHQMYPDQSFDZASBXJCCQAGKSFTACOOPAROPTZQSZJAGRAHFGAXTGGSGCCFEXDGEOZRSRTAHTWNPPAGNFPZGSPTZCMMISOAFXQCUZTGVUPXCTISJFQSANSZHMJGVIHDRGLMCONIEXGOAFTACTURCTECJSTIDXONAUCQNUEXCPDQJBCDQUWPIOXCPCGXRCDAHOFEXHWINUUWEAPDRGLZJAGRAGSCLGCOFIERIUIACFGLMIWXAMAOEOZHHTUORWQNPTZQSZJAGRAHFGAXTGAUZPSZPAHWEIACRGSUHDTIZRWRAXTGRRAEWGDMSSUSUQWGNQHHCSZDQKOZTGDAEXQCSODBUTUIIAEZJBCPMGHGMGNWPTQGSUAZISFEXDGHUZSOOEZICUDQAOUMMISOAFXQCSZDGGRMCHTAFPRCSMFIKCACRGTMAZGEZGSCLUSOFEZAOOAKDFKAPTZCSRPGGSPTZCNMAWUIEBOUQGTZQSYTHQDAHIUAPDGGNXPQQNEIFWCOXCPDQAQCMBDRGLAHBWMQGCURQPZGSZDGKNFTFGSMCGWSBGCRIQSOFEEECTLAIOPTAICOADTAQSGCDGQGTBQGDJDQDQPLKOYPGFEXDGEUMASUPGTRGNPTRWCUGGGTASOULMHDTOBXSFAPTGFEXDGPUYTFQSDTONEEEOTAMWCPDMGSPLAHAGTASCUUFXZKZMSCUEZAOEOZHHTUORWQNPTZEAYECTEMASNLQRHQRPTPGRUPQQNEJZVADAOURQUSTEZRWCSNXPNIAVFCFUROUDQATKNMARGLOPDKTGACGLFXHWLASSGSFTQCPUIINOQMDTEEPSPPAROUPMAODRMHZQSODBQCUBWGNFDGOAFTACTURCUNQRSUADXCUPMGONEQGSUTQAWDRASSJEOWCGSFTQQRFDQCPUIINOQHGKMBASOEZISWNMTLRLUROEIACRGLAFIGSQTBVIQCRGPAGDTOBXSFAPTGDAEXQCSPTZQSZJAGRAHHQDMHZCSOJONEEHIOAKBINTUEZKCMRWQNDTGVAKSWXIEXCPRQHCNUOXCPDQTQWAOXCPEEUOETAGWBAOXCPYAIFQSBGCEEEDGCLSTPTAURCUNAHGQNKPQQNARWFAEHWPEYQOTGATGVEOPDKTGACPOQHIPRQEOUOMESUADSSNOODBQCUSCFEXPACTQGWCLMTLRLAGOEIACEWEHPAQSMTARRQCRGRQHDTONPPNECJSRADTNEAZDJGDMSBQSQIFCTMSSRRQHSPTMGIPADTJKSUDBRRAAWLAPTACTQGWCSFGOFIOXCPAXTGUIZDRGSUCHGRUOOTEEISXIQYCUANTFGNGCFGDGRWFOPTDTOBXSFAPTGUEZRWNLMHDCRMHSTMQCQKOZPRCSBTFQVMPFGSGAHCRCJSWNEDFRRQCRGNFTBWMQGCFEPXJGREDGJEOWCUIYECTTMCHGSETCDTQCRTAODAQCACGGCGTBEIMSSNAEFIGVMBCUAPTGVAOPFFEXPGFOOTDTOBXSFAPTGSUQKOOOEPSUTGSWCRQCSUTQRORIFJZQLMHBWEHTDTIYTFCSETFGFUTFGNMAOUOBTFCCUDBGSRJBFAYTBVAXTGFEEJACYYJZVIBAWEAOXCPATDFCVQPAQSXDEWEPXQGPUHYWNAKIPOPTZQSODBEEBICUFGCRCMQCHCLQHRGLMHACTQBOVIOPGGSQABWMQGCGLODBEEBICFEZJAGRAHITGUDSPLMPBVISJSFAPPARLUPBFOETMIEZTFCLUOOPDAHSEOZTZVIQBDQLAHBWMQGCUEZISTOEITTAORWQNQHGGLXPACNZJAGRAHFCCUDBCLQHSNNGBSTODPQKOZPZRUQSSGXBDBGRETQQMAAOTALDBFEXDGPUYTFQSQCHGRAHDAQFPZGSCJSRYCHCPPDXAQSDTZCTUKCUEEICUNGBSTOEEIGDQCFGPDTGGNFPFUEBDFHRMRQKOZTGREDXCFIOPGHIZXHCSAXBHIZXHCSXDGPUYTFQSCJSPOFXSPEZJBCEJEOUIACRGCUBONCURZKCMHSNEEAZCMMXFTAOXCPAXTGGLODBLUZICSUQGSUUXIOFEXPIPIACRGLAHFCCUDBCLQHQQNXDGKRDPQKOZPZGSETZGLXPACCACXWNFDRGLAHBWMQGCURQPZGSQCSUTMEOTTQTJCDQTZCUFDFVOOPFGLBJBVOPDBFEETQQNEIFWYQCZQSZJAGRAHFGAXTGNAODBELGHWQNQHEWEZXBIUZAWDRASSEAXRINOXDHTAFPFCPGTGGSHTFFAPHCNOZDGKMBDFVAXPQQMBASVELSSNOECIOEDDGTEMASUPMGOCSQVITADFIGEJXGVAZACULUBWVEE '
+            def parse_pos_a_distancias(l):
+                s = ''
+                ln = len(l)
+                for i in range(ln - 1):
+                    n = l[i + 1] - l[i]
+                    s += str(n)
+                    if i < ln - 2:
+                        s += ', '
+                return s
+
+
+            start = 5
+            end = 20
+            l = len(s)
+
+            d = dict()
+            for i in range(start, end):
+                for k in range(l - i):
+                    aux = s[k:k + i]
+                    if aux not in d:
+                        d[aux] = [k]
+                    else:
+                        d[aux].append(k)
+
+            for (k, v,) in d.items():
+                if len(k) % 5 == 0 and len(v) > 3:
+                    print('secuencia: {}, longitud: {}, posicion: {}, distancia: {}, factores:'.format(
+                        k, len(k), ','.join(map(str, v)), parse_pos_a_distancias(v)))
+        \end{lstlisting}
+
+
+
+\chapter{Hill}
+
+
+
+\end{document}
